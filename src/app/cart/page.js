@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'; // For programmatic navigation
 import Image from 'next/image'; // For optimized image loading
 import Link from 'next/link'; // For client-side navigation
 
-export default function CartPage() {
+const CartPage = () => {
   // Get the router instance for navigation
   const router = useRouter();
 
@@ -150,4 +150,6 @@ export default function CartPage() {
       </div>
     </div>
   );
-} 
+};
+
+export default CartPage; 

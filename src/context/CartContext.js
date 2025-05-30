@@ -7,7 +7,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 const CartContext = createContext();
 
 // This function provides cart functionality to the entire application
-export function CartProvider({ children }) {
+export const CartProvider = ({ children }) => {
   // State to store the cart items
   const [cart, setCart] = useState([]);
   // State to track the total number of items in cart
@@ -176,10 +176,10 @@ export function CartProvider({ children }) {
       {children}
     </CartContext.Provider>
   );
-}
+};
 
 // Custom hook to use the cart context
-export function useCart() {
+export const useCart = () => {
   // Get the context
   const context = useContext(CartContext);
 
@@ -190,4 +190,4 @@ export function useCart() {
 
   // Return the context
   return context;
-} 
+}; 

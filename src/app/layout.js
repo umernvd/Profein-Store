@@ -1,3 +1,5 @@
+'use client';
+
 // Import the Inter font from Google Fonts
 import { Inter } from 'next/font/google';
 // Import the Big Shoulders font from Google Fonts
@@ -9,32 +11,12 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 // Import the CartProvider to manage cart state throughout the app
 import { CartProvider } from '@/context/CartContext';
-module.exports = {
-  // ...other config
-  extend: {
-    animation: {
-      'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-      'gradient': 'gradient 8s ease infinite',
-    },
-    keyframes: {
-      gradient: {
-        '0%, 100%': { backgroundPosition: '0% 50%' },
-        '50%': { backgroundPosition: '100% 50%' },
-      }
-    }
-  }
-}
+
 // Initialize the Inter font with Latin character subset
 const inter = Inter({ subsets: ['latin'] });
 
-// Set website metadata (title and description shown in browser tabs and search results)
-export const metadata = {
-  title: 'Profein - Your Ultimate Fitness Destination',
-  description: 'Premium fitness equipment and accessories for your fitness journey',
-};
-
 // The main layout component that wraps around all pages
-export default function RootLayout({ children }) {
+const RootLayout = ({ children }) => {
   return (
     // Begin HTML document with language set to English
     <html lang="en">
@@ -54,4 +36,6 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

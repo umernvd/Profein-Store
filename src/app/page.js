@@ -30,39 +30,39 @@ const itemVariants = {
 const HeroSlideshow = ({ products }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideshowProducts = products.slice(0, 4); // Use up to 4 products for slideshow
-  
+
   useEffect(() => {
     if (slideshowProducts.length === 0) return;
-    
+
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slideshowProducts.length);
     }, 3000);
-    
+
     return () => clearInterval(interval);
-}, [slideshowProducts.length]);
+  }, [slideshowProducts.length]);
 
-if (slideshowProducts.length === 0) {
+  if (slideshowProducts.length === 0) {
     return (
-        <div className="w-full h-full flex items-center justify-center rounded-xl bg-teal-900/20 border border-teal-800/30 overflow-hidden">
-            <p className="text-teal-400">Loading products...</p>
-        </div>
+      <div className="w-full h-full flex items-center justify-center rounded-xl bg-teal-900/20 border border-teal-800/30 overflow-hidden">
+        <p className="text-teal-400">Loading products...</p>
+      </div>
     );
-}
+  }
 
-return (
+  return (
     <div className="w-full h-full relative rounded-xl overflow-hidden border border-teal-800/30 shadow-2xl">
-        {slideshowProducts.map((product, index) => (
-            <motion.div 
-                key={product.id}
-                className="absolute inset-0"
-                initial={{ opacity: 0 }}
-                animate={{ 
-                    opacity: currentSlide === index ? 1 : 0,
-                    scale: currentSlide === index ? 1 : 1.1 
-                }}
-                transition={{ duration: 0.7, ease: "easeInOut" }}
-            >
-                {/* Product image */}
+      {slideshowProducts.map((product, index) => (
+        <motion.div
+          key={product.id}
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: currentSlide === index ? 1 : 0,
+            scale: currentSlide === index ? 1 : 1.1
+          }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
+        >
+          {/* Product image */}
           <div className="relative w-full h-full">
             <Image
               src={product.image || '/images/placeholder.jpg'}
@@ -72,10 +72,10 @@ return (
               unoptimized
               sizes="(max-width: 768px) 100vw, 50vw"
             />
-            
+
             {/* Overlay gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
-            
+
             {/* Product info overlay */}
             <div className="absolute bottom-0 left-0 w-full p-6 text-white">
               <p className="text-orange-400 font-medium mb-1">{product.category}</p>
@@ -85,15 +85,14 @@ return (
           </div>
         </motion.div>
       ))}
-      
+
       {/* Slideshow indicators */}
       <div className="absolute bottom-3 right-3 flex space-x-2">
         {slideshowProducts.map((_, index) => (
           <button
             key={index}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              currentSlide === index ? 'bg-orange-400 w-6' : 'bg-white/50'
-            }`}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${currentSlide === index ? 'bg-orange-400 w-6' : 'bg-white/50'
+              }`}
             onClick={() => setCurrentSlide(index)}
             aria-label={`Go to slide ${index + 1}`}
           />
@@ -113,6 +112,7 @@ export default function Home() {
 
   // Observer for scroll animations
   useEffect(() => {
+    const currentRef = productsRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -123,16 +123,16 @@ export default function Home() {
       { threshold: 0.1 }
     )
 
-    if (productsRef.current) {
-      observer.observe(productsRef.current)
+    if (currentRef) {
+      observer.observe(currentRef)
     }
 
     return () => {
-      if (productsRef.current) {
-        observer.unobserve(productsRef.current)
+      if (currentRef) {
+        observer.unobserve(currentRef)
       }
     }
-  }, [productsRef])
+  }, [])
 
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
@@ -149,7 +149,7 @@ export default function Home() {
         const formattedProducts = data.map((item) => {
           // Default placeholder image as fallback
           let imageUrl = '/images/placeholder.jpg';
-          
+
           // Check if we have valid image data based on your actual API structure
           try {
             if (item.image?.formats?.thumbnail?.url) {
@@ -194,11 +194,11 @@ export default function Home() {
       <section className="relative h-screen flex items-center overflow-hidden">
         {/* Background gradient animation */}
         <div className="absolute inset-0 bg-gradient-to-b from-black to-teal-700 opacity-80 animate-gradient"></div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 z-10 w-full">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             {/* Left side: Text content */}
-            <motion.div 
+            <motion.div
               className="md:w-1/2 text-left"
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -208,8 +208,8 @@ export default function Home() {
                 Your Ultimate Fitness{' '}
                 <span className="text-orange-400 inline-block animate-pulse-slow">Destination</span>
               </h1>
-              
-              <motion.p 
+
+              <motion.p
                 className="text-xl text-gray-200 mb-8 max-w-lg"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -217,7 +217,7 @@ export default function Home() {
               >
                 Premium equipment and accessories for your fitness journey
               </motion.p>
-              
+
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -233,9 +233,9 @@ export default function Home() {
                 </Link>
               </motion.div>
             </motion.div>
-            
+
             {/* Right side: Product slideshow */}
-            <motion.div 
+            <motion.div
               className="md:w-1/2 h-80 md:h-96 relative mt-8 md:mt-0"
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -250,7 +250,7 @@ export default function Home() {
       {/* Featured Products with animations */}
       <section className="py-24" ref={productsRef}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.h2 
+          <motion.h2
             className="text-3xl font-bold text-white text-center mb-12"
             initial={{ opacity: 0, y: -20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -276,7 +276,7 @@ export default function Home() {
           )}
 
           {error && (
-            <motion.div 
+            <motion.div
               className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6 text-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -287,7 +287,7 @@ export default function Home() {
           )}
 
           {!loading && !error && (
-            <motion.div 
+            <motion.div
               className="grid grid-cols-1 md:grid-cols-4 gap-8"
               variants={containerVariants}
               initial="hidden"
@@ -336,16 +336,16 @@ export default function Home() {
               ))}
             </motion.div>
           )}
-          
+
           {!loading && featuredProducts.length > 0 && (
-            <motion.div 
+            <motion.div
               className="text-center mt-12"
               initial={{ opacity: 0 }}
               animate={isVisible ? { opacity: 1 } : {}}
               transition={{ delay: 0.8, duration: 0.5 }}
             >
-              <Link 
-                href="/products" 
+              <Link
+                href="/products"
                 className="text-orange-400 border border-orange-400 px-6 py-2 rounded-lg hover:bg-orange-400 hover:text-black transition-all duration-300"
               >
                 View All Products

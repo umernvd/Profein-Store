@@ -8,7 +8,7 @@ import Link from 'next/link'; // For client-side navigation
 // We can import the formatCurrency utility here when using it
 // import { formatCurrency } from '@/utils/formatCurrency';
 
-export default function CheckoutPage() {
+const CheckoutPage = () => {
   // Initialize router for navigation after checkout
   const router = useRouter();
 
@@ -432,4 +432,6 @@ export default function CheckoutPage() {
       </div>
     </div>
   );
-} 
+};
+
+export default CheckoutPage; 

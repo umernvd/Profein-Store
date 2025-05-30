@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 
 const teamMembers = [
@@ -9,7 +11,7 @@ const teamMembers = [
   }
 ];
 
-export default function AboutPage() {
+const AboutPage = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Hero Section */}
@@ -74,4 +76,6 @@ export default function AboutPage() {
       </div>
     </div>
   );
-} 
+};
+
+export default AboutPage; 
