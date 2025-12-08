@@ -24,12 +24,12 @@ export default function Navbar() {
   
 
   return (
-    // Main navigation bar with teal background and shadow
-    <nav className="bg-teal-700 shadow-md sticky">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sticky">
-        <div className="flex justify-between h-16 sticky">
+    // Main navigation bar with glassmorphism effect
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-teal-700/95 backdrop-blur-md shadow-lg border-b border-teal-600/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
           {/* Logo/Brand section */}
-         <div className="flex items-center sticky">
+         <div className="flex items-center">
   <Link href="/" className="flex-shrink-0 flex items-center">
     <Image
       src="/images/store-logo.png"
@@ -45,7 +45,7 @@ export default function Navbar() {
 </div>
 
           {/* Desktop Menu - only visible on medium screens and above */}
-          <div className="hidden md:flex items-center space-x-8 sticky">
+          <div className="hidden md:flex items-center space-x-8">
             {/* Map through menu items to create links */}
             {menuItems.map((item) => (
               <Link
@@ -68,13 +68,13 @@ export default function Navbar() {
             {/* Cart button with item count */}
             <Link
               href="/cart"
-              className="relative text-teal-800 bg-orange-400 hover:bg-orange-500 px-4 py-2 rounded-md text-sm font-medium transition-colors group"
+              className="relative text-teal-800 bg-orange-400 hover:bg-orange-500 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 group hover:shadow-lg hover:scale-105"
             >
               <span className="flex items-center">
                 Cart
                 {/* Show cart count badge if there are items in cart */}
                 {cartCount > 0 && (
-                  <span className="ml-2 bg-teal-800 text-orange-400 px-2 py-1 rounded-full text-xs group-hover:bg-teal-900">
+                  <span className="ml-2 bg-teal-800 text-orange-400 px-2 py-1 rounded-full text-xs group-hover:bg-teal-900 animate-pulse">
                     {cartCount}
                   </span>
                 )}
@@ -106,7 +106,7 @@ export default function Navbar() {
 
       {/* Mobile Menu - only displayed when isMenuOpen is true */}
       {isMenuOpen && (
-        <div className="md:hidden bg-teal-800">
+        <div className="md:hidden bg-teal-800/95 backdrop-blur-md border-t border-teal-600/50 animate-slideDown">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {/* Map through menu items to create mobile menu links */}
             {menuItems.map((item) => (
