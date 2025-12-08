@@ -32,7 +32,7 @@ const RootLayout = ({ children }) => {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Science+Gothic:wght@100..900&display=swap" rel="stylesheet" />
       </head>
-      <body className={inter.className}>
+      <body>
         {/* Wrap the entire app with ErrorBoundary to catch React errors */}
         <ErrorBoundary>
           {/* Wrap with ToastProvider for global toast notifications */}
