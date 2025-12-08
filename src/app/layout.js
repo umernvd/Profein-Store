@@ -26,6 +26,12 @@ const RootLayout = ({ children }) => {
   return (
     // Begin HTML document with language set to English
     <html lang="en">
+      <head>
+        {/* Science Gothic font from Google Fonts */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Science+Gothic:wght@100..900&display=swap" rel="stylesheet" />
+      </head>
       <body className={inter.className}>
         {/* Wrap the entire app with ErrorBoundary to catch React errors */}
         <ErrorBoundary>
