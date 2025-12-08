@@ -9,6 +9,7 @@ import { motion } from 'framer-motion'
 import { getProducts } from '@/lib/api'
 import { getImageUrl } from '@/lib/imageHelper'
 import { TIMING } from '@/lib/constants'
+import { ProductGridSkeleton } from '@/components/SkeletonLoader'
 
 // Animation variants for staggered animations
 const containerVariants = {
@@ -137,8 +138,25 @@ export default function Home() {
   if (loading) {
     return (
       <main className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-orange-50">
-        <div className="container mx-auto px-4 py-16 text-center">
-          <p className="text-teal-600 text-xl">Loading products...</p>
+        <div className="container mx-auto px-4 py-16">
+          {/* Hero skeleton */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+            <div className="space-y-6">
+              <div className="h-16 bg-gray-200 rounded w-3/4 animate-pulse"></div>
+              <div className="h-6 bg-gray-200 rounded w-full animate-pulse"></div>
+              <div className="flex gap-4">
+                <div className="h-12 bg-gray-200 rounded w-32 animate-pulse"></div>
+                <div className="h-12 bg-gray-200 rounded w-32 animate-pulse"></div>
+              </div>
+            </div>
+            <div className="h-96 bg-gray-200 rounded-xl animate-pulse"></div>
+          </div>
+          
+          {/* Featured products skeleton */}
+          <h2 className="text-4xl font-bold text-teal-900 mb-8 text-center">
+            Featured Products
+          </h2>
+          <ProductGridSkeleton count={4} />
         </div>
       </main>
     );
@@ -172,18 +190,22 @@ export default function Home() {
             </motion.p>
 
             <motion.div variants={itemVariants} className="flex gap-4">
-              <Link
-                href="/products"
-                className="bg-orange-400 text-teal-900 px-8 py-3 rounded-lg font-semibold hover:bg-orange-500 transition-colors duration-300"
-              >
-                Shop Now
-              </Link>
-              <Link
-                href="/about"
-                className="border-2 border-teal-800 text-teal-900 px-8 py-3 rounded-lg font-semibold hover:bg-teal-900 hover:text-white transition-colors duration-300"
-              >
-                Learn More
-              </Link>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  href="/products"
+                  className="inline-block bg-orange-400 text-teal-900 px-8 py-3 rounded-lg font-semibold hover:bg-orange-500 transition-colors duration-300"
+                >
+                  Shop Now
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  href="/about"
+                  className="inline-block border-2 border-teal-800 text-teal-900 px-8 py-3 rounded-lg font-semibold hover:bg-teal-900 hover:text-white transition-colors duration-300"
+                >
+                  Learn More
+                </Link>
+              </motion.div>
             </motion.div>
           </motion.div>
 
@@ -206,23 +228,32 @@ export default function Home() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {products.slice(0, 4).map((product) => (
+          {products.slice(0, 4).map((product, index) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-teal-100"
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition-shadow duration-300 border border-teal-100 group"
             >
-              <div className="relative h-48">
-                <Image
-                  src={getImageUrl(product.image, '/images/placeholder.jpg')}
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                  unoptimized
-                />
+              <div className="relative h-48 overflow-hidden">
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.4 }}
+                  className="w-full h-full"
+                >
+                  <Image
+                    src={getImageUrl(product.image, '/images/placeholder.jpg')}
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    unoptimized
+                  />
+                </motion.div>
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-t from-teal-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
               <div className="p-4">
                 <span className="text-sm text-orange-500 font-medium">
@@ -234,24 +265,34 @@ export default function Home() {
                 <p className="text-teal-900 font-semibold mt-2">
                   ${product.price.toFixed(2)}
                 </p>
-                <button
+                <motion.button
                   onClick={() => handleAddToCart(product)}
-                  className="w-full mt-4 bg-orange-400 text-teal-900 py-2 rounded-md hover:bg-orange-500 transition-colors duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full mt-4 bg-orange-400 text-teal-900 py-2 rounded-md hover:bg-orange-500 transition-colors duration-300 font-medium relative overflow-hidden group/btn"
                 >
-                  Add to Cart
-                </button>
+                  <span className="relative z-10">Add to Cart</span>
+                  <motion.div
+                    className="absolute inset-0 bg-orange-500"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.button>
               </div>
             </motion.div>
           ))}
         </div>
 
         <div className="text-center mt-12">
-          <Link
-            href="/products"
-            className="inline-block bg-teal-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-teal-800 transition-colors duration-300"
-          >
-            View All Products
-          </Link>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              href="/products"
+              className="inline-block bg-teal-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-teal-800 transition-colors duration-300"
+            >
+              View All Products
+            </Link>
+          </motion.div>
         </div>
       </section>
     </main>

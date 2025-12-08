@@ -39,3 +39,6 @@ export const ProductGridSkeleton = ({ count = 4 }) => {
     </div>
   );
 };
+
+// Default export for easier importing
+export default ProductGridSkeleton;
