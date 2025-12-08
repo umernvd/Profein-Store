@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { useState, useEffect } from 'react';
+import { getProducts } from '@/lib/api';
 
 export default function ProductsPage() {
   const { addToCart } = useCart();
@@ -13,29 +14,11 @@ export default function ProductsPage() {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/products?populate=*`
-        );
-        
-        if (!response.ok) throw new Error('Failed to fetch products');
-        
-        const { data } = await response.json();
-        
-        const formattedProducts = data.map(item => ({
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          description: item.description,
-          image: item.image?.formats?.thumbnail?.url 
-            ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${item.image.formats.thumbnail.url}`
-            : `${process.env.NEXT_PUBLIC_STRAPI_URL}${item.image?.url}` || '/images/placeholder.jpg',
-          category: item.products?.[0]?.name || 'Uncategorized'
-        }));
-
-        setProducts(formattedProducts);
+        const { data } = await getProducts();
+        setProducts(data || []);
       } catch (error) {
         console.error('Error fetching products:', error);
-        setError('Failed to load products. Please try again later.');
+        setError('Failed to load products. Showing cached products.');
       } finally {
         setLoading(false);
       }
@@ -54,7 +37,7 @@ export default function ProductsPage() {
       )}
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
+        <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 px-4 py-3 rounded mb-6">
           {error}
         </div>
       )}
