@@ -104,21 +104,147 @@ const HeroSlideshow = ({ products }) => {
   );
 };
 
-export default async function Home() {
-  const productsData = await getProducts();
-  const products = productsData?.data || [];
+// Main Home component
+export default function Home() {
+  const { addToCart } = useCart();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data } = await getProducts();
+        setProducts(data || []);
+      } catch (error) {
+        console.error('Error loading products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-orange-50">
+        <div className="container mx-auto px-4 py-16 text-center">
+          <p className="text-teal-600 text-xl">Loading products...</p>
+        </div>
+      </main>
+    );
+  }
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">Featured Products</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.map((product) => (
-          <div key={product.id} className="border rounded-lg p-4">
-            <h2 className="text-xl font-semibold">{product.attributes.name}</h2>
-            <p className="text-gray-600">${product.attributes.price}</p>
-          </div>
-        ))}
-      </div>
+    <main className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-orange-50">
+      {/* Hero Section */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left: Text Content */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={containerVariants}
+            className="space-y-6"
+          >
+            <motion.h1
+              variants={itemVariants}
+              className="text-5xl lg:text-6xl font-bold text-teal-900 leading-tight"
+            >
+              Transform Your
+              <span className="text-orange-400"> Fitness Journey</span>
+            </motion.h1>
+
+            <motion.p
+              variants={itemVariants}
+              className="text-xl text-teal-700"
+            >
+              Premium gym equipment and supplements to help you reach your goals
+            </motion.p>
+
+            <motion.div variants={itemVariants} className="flex gap-4">
+              <Link
+                href="/products"
+                className="bg-orange-400 text-teal-900 px-8 py-3 rounded-lg font-semibold hover:bg-orange-500 transition-colors duration-300"
+              >
+                Shop Now
+              </Link>
+              <Link
+                href="/about"
+                className="border-2 border-teal-800 text-teal-900 px-8 py-3 rounded-lg font-semibold hover:bg-teal-900 hover:text-white transition-colors duration-300"
+              >
+                Learn More
+              </Link>
+            </motion.div>
+          </motion.div>
+
+          {/* Right: Hero Slideshow */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="h-96 lg:h-[500px]"
+          >
+            <HeroSlideshow products={products} />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Featured Products Section */}
+      <section className="container mx-auto px-4 py-16">
+        <h2 className="text-4xl font-bold text-teal-900 mb-8 text-center">
+          Featured Products
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {products.slice(0, 4).map((product) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-teal-100"
+            >
+              <div className="relative h-48">
+                <Image
+                  src={getImageUrl(product.image, '/images/placeholder.jpg')}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                  unoptimized
+                />
+              </div>
+              <div className="p-4">
+                <span className="text-sm text-orange-500 font-medium">
+                  {product.category}
+                </span>
+                <h3 className="text-lg font-semibold text-teal-800 mt-1">
+                  {product.name}
+                </h3>
+                <p className="text-teal-900 font-semibold mt-2">
+                  ${product.price.toFixed(2)}
+                </p>
+                <button
+                  onClick={() => addToCart(product)}
+                  className="w-full mt-4 bg-orange-400 text-teal-900 py-2 rounded-md hover:bg-orange-500 transition-colors duration-300"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <Link
+            href="/products"
+            className="inline-block bg-teal-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-teal-800 transition-colors duration-300"
+          >
+            View All Products
+          </Link>
+        </div>
+      </section>
     </main>
   );
 }

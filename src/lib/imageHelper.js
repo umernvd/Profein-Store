@@ -2,8 +2,18 @@
 // Supports: local images, Strapi URLs, and Cloudinary URLs
 // Provides seamless transition between development and production
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_STRAPI_URL || '';
-const USE_LOCAL_IMAGES = !BACKEND_URL || BACKEND_URL.includes('localhost');
+// Helper to safely get backend URL
+function getBackendUrl() {
+  return (typeof window !== 'undefined' 
+    ? process.env.NEXT_PUBLIC_STRAPI_URL 
+    : process.env.NEXT_PUBLIC_STRAPI_URL) || '';
+}
+
+// Helper to check if we should use local images
+function shouldUseLocalImages() {
+  const backendUrl = getBackendUrl();
+  return !backendUrl || backendUrl.includes('localhost');
+}
 
 // Product image mapping (backend filename → frontend filename)
 // Maps Strapi's uploaded filenames to our clean local filenames
@@ -45,12 +55,12 @@ export function getImageUrl(imageData, fallback = '/images/placeholder.jpg') {
     const filename = strapiUrl.split('/').pop();
     
     // Use local mapped image if available and in development mode
-    if (USE_LOCAL_IMAGES && IMAGE_MAP[filename]) {
+    if (shouldUseLocalImages() && IMAGE_MAP[filename]) {
       return IMAGE_MAP[filename];
     }
     
     // Use backend URL for production
-    return `${BACKEND_URL}${strapiUrl}`;
+    return `${getBackendUrl()}${strapiUrl}`;
   }
 
   // Case 4: Simple string path
@@ -62,7 +72,7 @@ export function getImageUrl(imageData, fallback = '/images/placeholder.jpg') {
     if (IMAGE_MAP[imageData]) return IMAGE_MAP[imageData];
     
     // Otherwise try to construct backend URL
-    return `${BACKEND_URL}/uploads/${imageData}`;
+    return `${getBackendUrl()}/uploads/${imageData}`;
   }
 
   return fallback;
@@ -83,11 +93,11 @@ export function getThumbnailUrl(imageData, fallback = '/images/placeholder.jpg')
       const thumbUrl = imageData.formats.thumbnail.url;
       const filename = thumbUrl.split('/').pop();
       
-      if (USE_LOCAL_IMAGES && IMAGE_MAP[filename]) {
+      if (shouldUseLocalImages() && IMAGE_MAP[filename]) {
         return IMAGE_MAP[filename];
       }
       
-      return `${BACKEND_URL}${thumbUrl}`;
+      return `${getBackendUrl()}${thumbUrl}`;
     }
     
     // Fall back to main image
