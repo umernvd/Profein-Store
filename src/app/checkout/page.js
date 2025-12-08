@@ -5,6 +5,7 @@ import { useState } from 'react'; // For state management
 import { useRouter } from 'next/navigation'; // For programmatic navigation
 import { useCart } from '@/context/CartContext'; // For cart functionality
 import Link from 'next/link'; // For client-side navigation
+import { VALIDATION } from '@/lib/constants';
 // We can import the formatCurrency utility here when using it
 // import { formatCurrency } from '@/utils/formatCurrency';
 
@@ -46,6 +47,32 @@ const CheckoutPage = () => {
   // State to track if order is being processed
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // Helper function to get autocomplete attribute for better UX
+  const getAutocompleteValue = (fieldName) => {
+    const autocompleteMap = {
+      shippingFirstName: 'given-name',
+      shippingLastName: 'family-name',
+      shippingEmail: 'email',
+      shippingPhone: 'tel',
+      shippingAddress: 'street-address',
+      shippingCity: 'address-level2',
+      shippingState: 'address-level1',
+      shippingZip: 'postal-code',
+      billingFirstName: 'given-name',
+      billingLastName: 'family-name',
+      billingEmail: 'email',
+      billingPhone: 'tel',
+      billingAddress: 'street-address',
+      billingCity: 'address-level2',
+      billingState: 'address-level1',
+      billingZip: 'postal-code',
+      cardNumber: 'cc-number',
+      cardExpiry: 'cc-exp',
+      cardCvc: 'cc-csc',
+    };
+    return autocompleteMap[fieldName] || 'off';
+  };
+
   // If cart is empty, show message directing user to products page
   if (cart.length === 0) {
     return (
@@ -77,6 +104,60 @@ const CheckoutPage = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
+    
+    // Basic client-side validation using constants
+    // Validate shipping email
+    if (!VALIDATION.EMAIL_REGEX.test(formData.shippingEmail)) {
+      alert('Please enter a valid email address');
+      return;
+    }
+    
+    // Validate shipping phone
+    if (!VALIDATION.PHONE_REGEX.test(formData.shippingPhone) || formData.shippingPhone.length < VALIDATION.MIN_PHONE_LENGTH) {
+      alert(`Please enter a valid phone number (at least ${VALIDATION.MIN_PHONE_LENGTH} digits)`);
+      return;
+    }
+    
+    // Validate billing if different from shipping
+    if (!formData.sameAsShipping) {
+      if (!VALIDATION.EMAIL_REGEX.test(formData.billingEmail)) {
+        alert('Please enter a valid billing email address');
+        return;
+      }
+      if (!VALIDATION.PHONE_REGEX.test(formData.billingPhone) || formData.billingPhone.length < VALIDATION.MIN_PHONE_LENGTH) {
+        alert(`Please enter a valid billing phone number (at least ${VALIDATION.MIN_PHONE_LENGTH} digits)`);
+        return;
+      }
+    }
+    
+    // Validate ZIP code
+    if (!VALIDATION.ZIP_REGEX.test(formData.shippingZip)) {
+      alert('Please enter a valid ZIP code (e.g., 12345 or 12345-6789)');
+      return;
+    }
+    
+    // Validate card details if online payment selected
+    if (formData.paymentMethod === 'ONLINE') {
+      // Remove spaces from card number for validation
+      const cardDigits = formData.cardNumber.replace(/\s/g, '');
+      if (!VALIDATION.CARD_NUMBER_REGEX.test(cardDigits)) {
+        alert('Please enter a valid card number (13-19 digits)');
+        return;
+      }
+      
+      // Validate expiry format (MM/YY)
+      if (!VALIDATION.CARD_EXPIRY_REGEX.test(formData.cardExpiry)) {
+        alert('Please enter card expiry in MM/YY format');
+        return;
+      }
+      
+      // Validate CVC
+      if (!VALIDATION.CARD_CVC_REGEX.test(formData.cardCvc)) {
+        alert('Please enter a valid CVC (3-4 digits)');
+        return;
+      }
+    }
+    
     setIsProcessing(true); // Set processing state to show loading UI
 
     try {
@@ -144,7 +225,7 @@ const CheckoutPage = () => {
   };
 
   // Reusable input field component for form fields
-  const InputField = ({ label, name, type = 'text', required = true, value, onChange }) => (
+  const InputField = ({ label, name, type = 'text', required = true, value, onChange, placeholder }) => (
     <div>
       <label htmlFor={name} className="block text-sm font-medium text-teal-800 mb-1">
         {label}
@@ -156,6 +237,8 @@ const CheckoutPage = () => {
         value={value}
         onChange={onChange}
         required={required}
+        placeholder={placeholder}
+        autoComplete={getAutocompleteValue(name)}
         className="w-full px-3 py-2 border border-teal-200 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent text-black"
       />
     </div>
@@ -247,7 +330,7 @@ const CheckoutPage = () => {
                   name="sameAsShipping"
                   checked={formData.sameAsShipping}
                   onChange={handleInputChange}
-                  className="h-4 w-4 text-orange-400 focus:ring-orange-400 border-teal-300 rounded text-black"
+                  className="h-4 w-4 focus:ring-orange-400 border-teal-300 rounded"
                 />
                 <label htmlFor="sameAsShipping" className="ml-2 text-sm text-teal-800">
                   Billing address same as shipping
@@ -326,7 +409,7 @@ const CheckoutPage = () => {
                     value="COD"
                     checked={formData.paymentMethod === 'COD'}
                     onChange={handleInputChange}
-                    className="h-4 w-4 text-orange-400 focus:ring-orange-400 border-teal-300 text-black"
+                    className="h-4 w-4 focus:ring-orange-400 border-teal-300"
                   />
                   <label htmlFor="cod" className="text-teal-800">
                     Cash on Delivery (COD)
@@ -341,7 +424,7 @@ const CheckoutPage = () => {
                     value="ONLINE"
                     checked={formData.paymentMethod === 'ONLINE'}
                     onChange={handleInputChange}
-                    className="h-4 w-4 text-orange-400 focus:ring-orange-400 border-teal-300 text-black"
+                    className="h-4 w-4 focus:ring-orange-400 border-teal-300"
                   />
                   <label htmlFor="online" className="text-teal-800">
                     Online Payment (Credit/Debit Card)

@@ -24,8 +24,17 @@ export default function AdminLogin() {
     // In a real app, you would make an API call to verify credentials
     // For this demo, we'll use hardcoded credentials (admin/admin123)
     if (username === 'admin' && password === 'admin123') {
-      // Store a simple token in localStorage
-      localStorage.setItem('adminToken', 'demo-token-12345');
+      // Store a simple token in localStorage (only in browser)
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('adminToken', 'demo-token-12345');
+        } catch (error) {
+          console.error('Error saving token to localStorage:', error);
+          setError('Failed to save session');
+          setIsLoading(false);
+          return;
+        }
+      }
 
       // Redirect to admin dashboard
       router.push('/admin');

@@ -9,15 +9,29 @@ export function OrderProvider({ children }) {
 
   // Load orders from localStorage when the component mounts
   useEffect(() => {
-    const savedOrders = localStorage.getItem('orders');
-    if (savedOrders) {
-      setOrders(JSON.parse(savedOrders));
+    // Check if we're in the browser (not SSR)
+    if (typeof window !== 'undefined') {
+      try {
+        const savedOrders = localStorage.getItem('orders');
+        if (savedOrders) {
+          setOrders(JSON.parse(savedOrders));
+        }
+      } catch (error) {
+        console.error('Error loading orders from localStorage:', error);
+      }
     }
   }, []);
 
   // Save orders to localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem('orders', JSON.stringify(orders));
+    // Only save in browser environment
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('orders', JSON.stringify(orders));
+      } catch (error) {
+        console.error('Error saving orders to localStorage:', error);
+      }
+    }
   }, [orders]);
 
   // Add a new order

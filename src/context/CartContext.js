@@ -2,6 +2,7 @@
 
 // Import necessary React hooks for state management and context creation
 import { createContext, useContext, useState, useEffect } from 'react';
+import { CART } from '@/lib/constants';
 
 // Create a Context for our shopping cart
 const CartContext = createContext();
@@ -16,19 +17,32 @@ export const CartProvider = ({ children }) => {
   // This effect runs once when the component mounts
   // It loads any saved cart data from the browser's localStorage
   useEffect(() => {
-    // Try to get cart data from localStorage
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      // If cart data exists, convert it from JSON string to JavaScript object
-      setCart(JSON.parse(savedCart));
+    // Check if we're in the browser (not SSR)
+    if (typeof window !== 'undefined') {
+      try {
+        // Try to get cart data from localStorage
+        const savedCart = localStorage.getItem('cart');
+        if (savedCart) {
+          // If cart data exists, convert it from JSON string to JavaScript object
+          setCart(JSON.parse(savedCart));
+        }
+      } catch (error) {
+        console.error('Error loading cart from localStorage:', error);
+      }
     }
   }, []);
 
   // This effect runs whenever the cart changes
   // It updates localStorage and recalculates the total item count
   useEffect(() => {
-    // Save the current cart to localStorage
-    localStorage.setItem('cart', JSON.stringify(cart));
+    // Save the current cart to localStorage (only in browser)
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('cart', JSON.stringify(cart));
+      } catch (error) {
+        console.error('Error saving cart to localStorage:', error);
+      }
+    }
     // Calculate the total quantity of all items
     setCartCount(cart.reduce((total, item) => total + item.quantity, 0));
   }, [cart]);
@@ -61,16 +75,19 @@ export const CartProvider = ({ children }) => {
   // Function to update the quantity of a specific item
   const updateQuantity = (productId, quantity) => {
     // If quantity is less than 1, remove the item completely
-    if (quantity < 1) {
+    if (quantity < CART.MIN_QUANTITY) {
       removeFromCart(productId);
       return;
     }
+
+    // Limit quantity to a maximum per item
+    const validQuantity = Math.min(quantity, CART.MAX_QUANTITY_PER_ITEM);
 
     // Otherwise update the quantity of the specific item
     setCart(prevCart =>
       prevCart.map(item =>
         item.id === productId
-          ? { ...item, quantity }
+          ? { ...item, quantity: validQuantity }
           : item
       )
     );
@@ -100,14 +117,20 @@ export const CartProvider = ({ children }) => {
       // Create a random order ID for now (this will be handled by Strapi in production)
       const orderId = Math.random().toString(36).substr(2, 9).toUpperCase();
 
-      // Store order details in localStorage for the confirmation page
-      localStorage.setItem('lastOrder', JSON.stringify({
-        orderId,
-        items: cart,
-        total: getCartTotal(),
-        shipping: orderDetails.shipping,
-        paymentMethod: orderDetails.paymentMethod
-      }));
+      // Store order details in localStorage for the confirmation page (only in browser)
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('lastOrder', JSON.stringify({
+            orderId,
+            items: cart,
+            total: getCartTotal(),
+            shipping: orderDetails.shipping,
+            paymentMethod: orderDetails.paymentMethod
+          }));
+        } catch (error) {
+          console.error('Error saving order to localStorage:', error);
+        }
+      }
 
       // Handle online payment if selected
       if (orderDetails.paymentMethod === 'ONLINE') {
@@ -150,7 +173,10 @@ export const CartProvider = ({ children }) => {
         throw new Error('Failed to process order');
       }
 
-      // Clear the cart after successful order
+      // Wait for the response to complete before clearing cart
+      const result = await response.json();
+
+      // Clear the cart after successful order confirmation
       clearCart();
       return { success: true, orderId };
     } catch (error) {

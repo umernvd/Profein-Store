@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { getProducts } from '@/lib/api'
 import { getImageUrl } from '@/lib/imageHelper'
+import { TIMING } from '@/lib/constants'
 
 // Animation variants for staggered animations
 const containerVariants = {
@@ -38,8 +39,9 @@ const HeroSlideshow = ({ products }) => {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slideshowProducts.length);
-    }, 3000);
+    }, TIMING.HERO_SLIDESHOW_INTERVAL);
 
+    // Clean up interval on component unmount or when dependencies change
     return () => clearInterval(interval);
   }, [slideshowProducts.length]);
 

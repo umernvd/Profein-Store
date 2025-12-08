@@ -12,7 +12,6 @@
       3840
     ],
     "imageSizes": [
-      16,
       32,
       48,
       64,
@@ -26,20 +25,36 @@
     "loaderFile": "",
     "domains": [],
     "disableStaticImages": false,
-    "minimumCacheTTL": 60,
+    "minimumCacheTTL": 14400,
     "formats": [
       "image/webp"
     ],
+    "maximumRedirects": 3,
+    "dangerouslyAllowLocalIP": false,
     "dangerouslyAllowSVG": false,
     "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;",
     "contentDispositionType": "attachment",
+    "localPatterns": [
+      {
+        "pathname": "^(?:(?!(?:^|\\/)\\.{1,2}(?:\\/|$))(?:(?:(?!(?:^|\\/)\\.{1,2}(?:\\/|$)).)*?)\\/?)$",
+        "search": ""
+      }
+    ],
     "remotePatterns": [
       {
         "protocol": "http",
         "hostname": "^(?:^(?:localhost)$)$",
         "port": "1337",
         "pathname": "^(?:\\/uploads(?:\\/(?!\\.{1,2}(?:\\/|$))(?:(?:(?!(?:^|\\/)\\.{1,2}(?:\\/|$)).)*?)|$))$"
+      },
+      {
+        "protocol": "https",
+        "hostname": "^(?:^(?:res\\.cloudinary\\.com)$)$",
+        "pathname": "^(?:\\/(?!\\.{1,2}(?:\\/|$))(?:(?:(?!(?:^|\\/)\\.{1,2}(?:\\/|$)).)*?))$"
       }
+    ],
+    "qualities": [
+      75
     ],
     "unoptimized": false,
     "sizes": [
@@ -51,7 +66,6 @@
       1920,
       2048,
       3840,
-      16,
       32,
       48,
       64,

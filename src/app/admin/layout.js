@@ -17,15 +17,25 @@ export default function AdminLayout({ children }) {
 
   // Check if admin is logged in on component mount
   useEffect(() => {
-    // In a real app, you would check a token in localStorage or cookies
-    const adminToken = localStorage.getItem('adminToken');
+    // Check if we're in the browser (not SSR)
+    if (typeof window !== 'undefined') {
+      try {
+        // In a real app, you would check a token in localStorage or cookies
+        const adminToken = localStorage.getItem('adminToken');
 
-    if (adminToken) {
-      setIsAuthenticated(true);
-    } else {
-      // If not logged in and not on login page, redirect to login
-      if (pathname !== '/admin/login') {
-        router.push('/admin/login');
+        if (adminToken) {
+          setIsAuthenticated(true);
+        } else {
+          // If not logged in and not on login page, redirect to login
+          if (pathname !== '/admin/login') {
+            router.push('/admin/login');
+          }
+        }
+      } catch (error) {
+        console.error('Error accessing localStorage:', error);
+        if (pathname !== '/admin/login') {
+          router.push('/admin/login');
+        }
       }
     }
 
@@ -48,7 +58,13 @@ export default function AdminLayout({ children }) {
 
   // Function to handle logout
   const handleLogout = () => {
-    localStorage.removeItem('adminToken');
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem('adminToken');
+      } catch (error) {
+        console.error('Error removing token from localStorage:', error);
+      }
+    }
     setIsAuthenticated(false);
     router.push('/admin/login');
   };
