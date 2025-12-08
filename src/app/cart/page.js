@@ -2,31 +2,73 @@
 
 // Import required hooks and components
 import { useCart } from '@/context/CartContext'; // For cart functionality
+import { useToast } from '@/context/ToastContext'; // For toast notifications
 import { useRouter } from 'next/navigation'; // For programmatic navigation
 import Image from 'next/image'; // For optimized image loading
 import Link from 'next/link'; // For client-side navigation
+import { motion } from 'framer-motion';
 
 const CartPage = () => {
   // Get the router instance for navigation
   const router = useRouter();
+  
+  // Get toast notification functions
+  const { showSuccess, showInfo } = useToast();
 
   // Get cart functions and data from our cart context
   const { cart, removeFromCart, updateQuantity, getCartTotal, clearCart } = useCart();
 
-  // If the cart is empty, show a message and a link to browse products
+  // Handle remove with toast notification
+  const handleRemove = (itemId, itemName) => {
+    removeFromCart(itemId);
+    showSuccess(`${itemName} removed from cart`);
+  };
+
+  // Handle clear cart with toast notification
+  const handleClearCart = () => {
+    clearCart();
+    showInfo('Cart cleared');
+  };
+
+  // If the cart is empty, show illustrated empty state
   if (cart.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-md mx-auto"
+        >
+          {/* Empty cart SVG illustration */}
+          <svg className="w-64 h-64 mx-auto mb-8" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="80" fill="#f0fdfa" />
+            <path d="M60 80h80l-8 60H68l-8-60z" fill="#ccfbf1" stroke="#0d9488" strokeWidth="2" />
+            <circle cx="75" cy="155" r="8" fill="#0d9488" />
+            <circle cx="125" cy="155" r="8" fill="#0d9488" />
+            <path d="M50 60h100" stroke="#0d9488" strokeWidth="3" strokeLinecap="round" />
+            <path d="M65 60V45a15 15 0 0130 0v15" stroke="#0d9488" strokeWidth="2" />
+            <line x1="80" y1="100" x2="120" y2="100" stroke="#fb923c" strokeWidth="3" strokeLinecap="round" />
+          </svg>
+          
           <h1 className="text-3xl font-bold text-teal-800 mb-4">Your Cart is Empty</h1>
-          <p className="text-teal-600 mb-8">Start shopping to add items to your cart.</p>
-          <Link
-            href="/products"
-            className="inline-block bg-orange-400 text-teal-900 px-8 py-3 rounded-lg font-semibold hover:bg-orange-500 transition duration-300"
-          >
-            Browse Products
-          </Link>
-        </div>
+          <p className="text-teal-600 mb-8">Looks like you haven't added any items yet. Start shopping to fill it up!</p>
+          
+          <div className="flex gap-4 justify-center">
+            <Link
+              href="/products"
+              className="inline-block bg-orange-400 text-teal-900 px-8 py-3 rounded-lg font-semibold hover:bg-orange-500 transition-all duration-300 shadow-md hover:shadow-lg"
+            >
+              Browse Products
+            </Link>
+            <Link
+              href="/"
+              className="inline-block border-2 border-teal-700 text-teal-800 px-8 py-3 rounded-lg font-semibold hover:bg-teal-50 transition-all duration-300"
+            >
+              Go Home
+            </Link>
+          </div>
+        </motion.div>
       </div>
     );
   }
@@ -87,8 +129,8 @@ const CartPage = () => {
 
                   {/* Remove item button */}
                   <button
-                    onClick={() => removeFromCart(item.id)}
-                    className="text-orange-500 hover:text-orange-600 transition-colors"
+                    onClick={() => handleRemove(item.id, item.name)}
+                    className="text-orange-500 hover:text-orange-600 transition-colors font-medium"
                   >
                     Remove
                   </button>
@@ -105,8 +147,8 @@ const CartPage = () => {
 
           {/* Clear cart button */}
           <button
-            onClick={clearCart}
-            className="text-orange-500 hover:text-orange-600 transition-colors mt-4"
+            onClick={handleClearCart}
+            className="text-orange-500 hover:text-orange-600 transition-colors mt-4 font-medium"
           >
             Clear Cart
           </button>
