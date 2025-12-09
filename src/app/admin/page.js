@@ -60,7 +60,7 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-teal-800 mb-8">Dashboard</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold text-teal-800 mb-6 sm:mb-8">Dashboard</h1>
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -90,19 +90,19 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent Orders Section */}
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-teal-800">Recent Orders</h2>
+      <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
+          <h2 className="text-lg sm:text-xl font-semibold text-teal-800">Recent Orders</h2>
           <Link
             href="/admin/orders"
-            className="text-sm text-orange-500 hover:text-orange-700"
+            className="text-sm text-orange-500 hover:text-orange-700 py-2"
           >
             View All Orders
           </Link>
         </div>
 
-        {/* Orders Table */}
-        <div className="overflow-x-auto">
+        {/* Orders Table - Desktop View */}
+        <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gray-50">
@@ -132,7 +132,7 @@ export default function AdminDashboard() {
                   <td className="px-4 py-3 text-right">
                     <Link
                       href={`/admin/orders/${order.id}`}
-                      className="text-teal-600 hover:text-teal-800"
+                      className="text-teal-600 hover:text-teal-800 inline-block py-2"
                     >
                       View
                     </Link>
@@ -141,6 +141,38 @@ export default function AdminDashboard() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Orders Cards - Mobile View */}
+        <div className="sm:hidden space-y-4">
+          {recentOrders.map((order) => (
+            <div key={order.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <p className="text-sm font-medium text-teal-800">{order.id}</p>
+                  <p className="text-sm text-gray-600 mt-1">{order.customer}</p>
+                </div>
+                <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
+                    order.status === 'Processing' ? 'bg-blue-100 text-blue-800' :
+                      'bg-orange-100 text-orange-800'
+                  }`}>
+                  {order.status}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm">
+                <div>
+                  <p className="text-gray-500">{order.date}</p>
+                  <p className="text-lg font-semibold text-teal-800 mt-1">${order.amount.toFixed(2)}</p>
+                </div>
+                <Link
+                  href={`/admin/orders/${order.id}`}
+                  className="bg-orange-400 text-teal-900 px-4 py-2 rounded-md hover:bg-orange-500 transition-colors min-h-[44px] flex items-center"
+                >
+                  View
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
