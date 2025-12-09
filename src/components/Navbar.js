@@ -11,6 +11,8 @@ import { useCart } from '@/context/CartContext';
 export default function Navbar() {
   // State to track if mobile menu is open or closed
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // State to track if menu is closing (for exit animation)
+  const [isClosing, setIsClosing] = useState(false);
   // Get the cart count from our CartContext
   const { cartCount } = useCart();
 
@@ -20,6 +22,15 @@ export default function Navbar() {
     { name: 'Products', path: '/products' },
     { name: 'About', path: '/about' },
   ];
+
+  // Handle menu close with animation
+  const handleMenuClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsMenuOpen(false);
+      setIsClosing(false);
+    }, 200); // Match animation duration
+  };
 
   
 
@@ -84,7 +95,13 @@ export default function Navbar() {
           {/* Mobile menu button - only visible on small screens */}
           <div className="md:hidden flex items-center">
             <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={() => {
+                if (isMenuOpen) {
+                  handleMenuClose();
+                } else {
+                  setIsMenuOpen(true);
+                }
+              }}
               className="inline-flex items-center justify-center p-2 rounded-md text-teal-100 hover:text-white hover:bg-teal-600"
             >
               <span className="sr-only">Open main menu</span>
@@ -105,7 +122,7 @@ export default function Navbar() {
 
       {/* Mobile Menu - only displayed when isMenuOpen is true */}
       {isMenuOpen && (
-        <div className="md:hidden bg-teal-800/95 backdrop-blur-md border-t border-teal-600/50 animate-slideDown">
+        <div className={`md:hidden bg-teal-800/95 backdrop-blur-md border-t border-teal-600/50 ${isClosing ? 'animate-slideUp' : 'animate-slideDown'}`}>
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {/* Map through menu items to create mobile menu links */}
             {menuItems.map((item) => (
@@ -113,7 +130,7 @@ export default function Navbar() {
                 key={item.name}
                 href={item.path}
                 className="block text-teal-100 hover:text-white hover:bg-teal-600 px-3 py-2 rounded-md text-base font-medium"
-                onClick={() => setIsMenuOpen(false)} // Close menu when link is clicked
+                onClick={handleMenuClose} // Close menu with animation when link is clicked
               >
                 {item.name}
               </Link>
@@ -123,7 +140,7 @@ export default function Navbar() {
             <Link
               href="/admin"
               className="block text-orange-400 hover:text-orange-300 hover:bg-teal-600 px-3 py-2 rounded-md text-base font-medium"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={handleMenuClose}
             >
               Admin
             </Link>
@@ -131,8 +148,8 @@ export default function Navbar() {
             {/* Mobile cart button */}
             <Link
               href="/cart"
-              className="block text-teal-800 bg-orange-400 hover:bg-orange-500 px-3 py-2 rounded-md text-base font-medium flex items-center justify-between"
-              onClick={() => setIsMenuOpen(false)} // Close menu when cart is clicked
+              className="flex text-teal-800 bg-orange-400 hover:bg-orange-500 px-3 py-2 rounded-md text-base font-medium items-center justify-between"
+              onClick={handleMenuClose} // Close menu with animation when cart is clicked
             >
               <span>Cart</span>
               {/* Show cart count badge if there are items in cart */}

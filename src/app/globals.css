@@ -61,6 +61,22 @@ body {
   animation: slideDown 0.2s ease-out;
 }
 
+/* Animation for mobile menu slide up */
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.2s ease-out;
+}
+
 /* Add padding to body to compensate for fixed navbar */
 body > div {
   padding-top: 64px; /* 4rem / 16px = height of navbar */
