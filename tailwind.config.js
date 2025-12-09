@@ -11,6 +11,9 @@ module.exports = {
         montserrat: ['var(--font-montserrat)'],
         quicksand: ['var(--font-quicksand)'],
       },
+      screens: {
+        'xs': '375px',
+      },
     },
   },
   plugins: [],
