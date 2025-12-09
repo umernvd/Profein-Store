@@ -82,7 +82,7 @@ export default function ProductsPage() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
       >
         {products.map((product) => (
           <motion.div
@@ -91,7 +91,7 @@ export default function ProductsPage() {
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition-shadow duration-300 border border-teal-100 group"
           >
-            <div className="relative h-48 overflow-hidden">
+            <div className="relative aspect-square overflow-hidden">
               <motion.div
                 whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.4 }}
