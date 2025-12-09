@@ -221,6 +221,15 @@ const AboutPage = () => {
     restDelta: 0.001
   });
 
+  const [flippedCards, setFlippedCards] = useState({});
+
+  const toggleCard = (index) => {
+    setFlippedCards(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
   const milestones = [
     { year: '2023', title: 'Company Founded', description: 'Started with a vision to revolutionize fitness retail' },
     { year: '2024', title: '10,000+ Customers', description: 'Reached our first major milestone' },
@@ -327,7 +336,9 @@ const AboutPage = () => {
                 whileInView={{ opacity: 1, rotateY: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2, duration: 0.8 }}
+                animate={{ rotateY: flippedCards[index] ? 180 : 0 }}
                 whileHover={{ rotateY: 180 }}
+                onClick={() => toggleCard(index)}
                 style={{ transformStyle: 'preserve-3d' }}
                 className="relative h-64 cursor-pointer"
               >
