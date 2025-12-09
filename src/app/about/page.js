@@ -125,10 +125,10 @@ const StatsCard = ({ icon, end, label, suffix = '' }) => {
           >
             {icon}
           </motion.div>
-          <div className="text-4xl font-bold text-teal-900 mb-2">
+          <div className="text-4xl font-bold text-teal-950 mb-2">
             {count}{suffix}
           </div>
-          <div className="text-teal-600">{label}</div>
+          <div className="text-teal-700">{label}</div>
         </div>
       </motion.div>
     </motion.div>
@@ -170,7 +170,7 @@ const MorphingBlob = ({ delay = 0 }) => {
       />
       <defs>
         <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#0d9488" />
+          <stop offset="0%" stopColor="#042f2e" />
           <stop offset="100%" stopColor="#fb923c" />
         </linearGradient>
       </defs>
@@ -276,7 +276,7 @@ const AboutPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-orange-50 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-teal-100 via-white to-orange-50 relative overflow-hidden">
       {/* Progress bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-orange-500 origin-left z-50"
@@ -306,13 +306,13 @@ const AboutPage = () => {
         >
           <AnimatedText
             text="About Profein"
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-teal-900 mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-teal-950 mb-6"
           />
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.8 }}
-            className="text-xl text-teal-600 max-w-3xl mx-auto"
+            className="text-xl text-teal-700 max-w-3xl mx-auto"
           >
             Your trusted destination for premium fitness equipment and accessories.
             We&apos;re committed to helping you achieve your fitness goals with top-quality products and exceptional service.
@@ -334,7 +334,7 @@ const AboutPage = () => {
           viewport={{ once: true }}
           className="mb-20"
         >
-          <h2 className="text-4xl font-bold text-teal-900 text-center mb-12">Our Mission</h2>
+          <h2 className="text-4xl font-bold text-teal-950 text-center mb-12">Our Mission</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
               { title: 'Premium Quality', description: 'Curated selection of top-tier fitness equipment', icon: '🏆' },
@@ -387,7 +387,7 @@ const AboutPage = () => {
           viewport={{ once: true }}
           className="mb-20"
         >
-          <h2 className="text-4xl font-bold text-teal-900 text-center mb-12">Our Journey</h2>
+          <h2 className="text-4xl font-bold text-teal-950 text-center mb-12">Our Journey</h2>
           <div className="relative">
             {/* Animated path */}
             <div className="absolute left-4 md:left-1/2 md:transform md:-translate-x-1/2 h-full w-1 bg-gradient-to-b from-teal-500 to-orange-500" />
@@ -407,8 +407,8 @@ const AboutPage = () => {
                     className="bg-white rounded-xl p-6 shadow-lg border border-teal-100"
                   >
                     <div className="text-orange-500 font-bold text-xl mb-2">{milestone.year}</div>
-                    <h3 className="text-teal-900 font-bold text-lg mb-2">{milestone.title}</h3>
-                    <p className="text-teal-600">{milestone.description}</p>
+                    <h3 className="text-teal-950 font-bold text-lg mb-2">{milestone.title}</h3>
+                    <p className="text-teal-700">{milestone.description}</p>
                   </motion.div>
                 </div>
                 
@@ -432,7 +432,7 @@ const AboutPage = () => {
           viewport={{ once: true }}
           className="mb-20"
         >
-          <h2 className="text-4xl font-bold text-teal-900 text-center mb-12">Our Values</h2>
+          <h2 className="text-4xl font-bold text-teal-950 text-center mb-12">Our Values</h2>
           <div className="grid md:grid-cols-2 gap-8">
             {values.map((value, index) => (
               <motion.div
@@ -453,11 +453,11 @@ const AboutPage = () => {
                     >
                       {value.icon}
                     </motion.div>
-                    <h3 className="text-2xl font-bold text-teal-900 mb-3">{value.title}</h3>
+                    <h3 className="text-2xl font-bold text-teal-950 mb-3">{value.title}</h3>
                     <motion.p
                       initial={{ height: 0 }}
                       whileInView={{ height: 'auto' }}
-                      className="text-teal-600 overflow-hidden"
+                      className="text-teal-700 overflow-hidden"
                     >
                       {value.description}
                     </motion.p>
@@ -475,7 +475,7 @@ const AboutPage = () => {
           viewport={{ once: true }}
           className="mb-20"
         >
-          <h2 className="text-4xl font-bold text-teal-900 text-center mb-12">Meet Our Founder</h2>
+          <h2 className="text-4xl font-bold text-teal-950 text-center mb-12">Meet Our Founder</h2>
           <div className="max-w-2xl mx-auto">
             <MagneticCard>
               <motion.div
@@ -531,7 +531,7 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center bg-gradient-to-r from-teal-500 to-orange-500 rounded-3xl p-12 text-white"
+          className="text-center bg-gradient-to-r from-teal-925 to-orange-500 rounded-3xl p-12 text-white"
         >
           <h2 className="text-4xl font-bold mb-4">Ready to Start Your Journey?</h2>
           <p className="text-xl mb-8">Join thousands of satisfied customers and transform your fitness today</p>
@@ -539,7 +539,7 @@ const AboutPage = () => {
             href="/products"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-block bg-white text-teal-900 px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-shadow"
+            className="inline-block bg-white text-teal-950 px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-shadow"
           >
             Shop Now
           </motion.a>
