@@ -140,36 +140,36 @@ export default function AdminOrders() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-teal-800 mb-6">Manage Orders</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold text-teal-800 mb-6">Manage Orders</h1>
 
       {/* Status filter */}
       <div className="mb-6 bg-white p-4 rounded-lg shadow-md">
-        <label className="block text-teal-700 mb-2">Filter by Status:</label>
+        <label className="block text-sm sm:text-base text-teal-700 mb-2">Filter by Status:</label>
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setStatusFilter('all')}
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusFilter === 'all' ? 'bg-teal-600 text-white' : 'bg-gray-100 text-teal-700'
+            className={`px-4 py-2 rounded-full text-sm font-medium min-h-[44px] ${statusFilter === 'all' ? 'bg-teal-600 text-white' : 'bg-gray-100 text-teal-700'
               }`}
           >
             All Orders
           </button>
           <button
             onClick={() => setStatusFilter('pending')}
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusFilter === 'pending' ? 'bg-orange-500 text-white' : 'bg-orange-100 text-orange-800'
+            className={`px-4 py-2 rounded-full text-sm font-medium min-h-[44px] ${statusFilter === 'pending' ? 'bg-orange-500 text-white' : 'bg-orange-100 text-orange-800'
               }`}
           >
             Pending
           </button>
           <button
             onClick={() => setStatusFilter('processing')}
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusFilter === 'processing' ? 'bg-blue-500 text-white' : 'bg-blue-100 text-blue-800'
+            className={`px-4 py-2 rounded-full text-sm font-medium min-h-[44px] ${statusFilter === 'processing' ? 'bg-blue-500 text-white' : 'bg-blue-100 text-blue-800'
               }`}
           >
             Processing
           </button>
           <button
             onClick={() => setStatusFilter('delivered')}
-            className={`px-3 py-1 rounded-full text-sm font-medium ${statusFilter === 'delivered' ? 'bg-green-500 text-white' : 'bg-green-100 text-green-800'
+            className={`px-4 py-2 rounded-full text-sm font-medium min-h-[44px] ${statusFilter === 'delivered' ? 'bg-green-500 text-white' : 'bg-green-100 text-green-800'
               }`}
           >
             Delivered
@@ -205,70 +205,124 @@ export default function AdminOrders() {
         </div>
       </div>
 
-      {/* Orders Table */}
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-teal-50">
-              <th className="px-4 py-2 text-left text-teal-700">Order ID</th>
-              <th className="px-4 py-2 text-left text-teal-700">Customer</th>
-              <th className="px-4 py-2 text-left text-teal-700">Date</th>
-              <th className="px-4 py-2 text-left text-teal-700">Amount</th>
-              <th className="px-4 py-2 text-left text-teal-700">Status</th>
-              <th className="px-4 py-2 text-right text-teal-700">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-teal-100">
-            {filteredOrders.length === 0 ? (
-              <tr>
-                <td colSpan="6" className="px-4 py-6 text-center text-teal-600">
-                  No orders found with the selected filter.
-                </td>
+      {/* Orders Table - Desktop View */}
+      <div className="hidden md:block bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-teal-50">
+                <th className="px-4 py-2 text-left text-teal-700">Order ID</th>
+                <th className="px-4 py-2 text-left text-teal-700">Customer</th>
+                <th className="px-4 py-2 text-left text-teal-700">Date</th>
+                <th className="px-4 py-2 text-left text-teal-700">Amount</th>
+                <th className="px-4 py-2 text-left text-teal-700">Status</th>
+                <th className="px-4 py-2 text-right text-teal-700">Actions</th>
               </tr>
-            ) : (
-              filteredOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-teal-50">
-                  <td className="px-4 py-3 text-teal-800 font-medium">{order.id}</td>
-                  <td className="px-4 py-3 text-teal-700">{order.customer}</td>
-                  <td className="px-4 py-3 text-teal-700">{order.date}</td>
-                  <td className="px-4 py-3 text-teal-700">${order.amount.toFixed(2)}</td>
-                  <td className="px-4 py-3">
-                    <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-                      order.status === 'Processing' ? 'bg-blue-100 text-blue-800' :
-                        'bg-orange-100 text-orange-800'
-                      }`}>
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    {/* Order details button */}
-                    <button
-                      onClick={() => {
-                        alert(`Order ${order.id} Details:\n\nCustomer: ${order.customer}\nEmail: ${order.email}\nDate: ${order.date}\nStatus: ${order.status}\n\nItems:\n${order.items.map(item => `- ${item.name} x${item.quantity} ($${item.price})`).join('\n')}`);
-                      }}
-                      className="text-teal-600 hover:text-teal-800 mr-2"
-                    >
-                      View
-                    </button>
-
-                    {/* Status update dropdown */}
-                    {order.status !== 'Delivered' && (
-                      <select
-                        value={order.status}
-                        onChange={(e) => updateOrderStatus(order.id, e.target.value)}
-                        className="text-sm border border-teal-200 rounded p-1 text-black"
-                      >
-                        <option value="Pending">Pending</option>
-                        <option value="Processing">Processing</option>
-                        <option value="Delivered">Delivered</option>
-                      </select>
-                    )}
+            </thead>
+            <tbody className="divide-y divide-teal-100">
+              {filteredOrders.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="px-4 py-6 text-center text-teal-600">
+                    No orders found with the selected filter.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                filteredOrders.map((order) => (
+                  <tr key={order.id} className="hover:bg-teal-50">
+                    <td className="px-4 py-3 text-teal-800 font-medium">{order.id}</td>
+                    <td className="px-4 py-3 text-teal-700">{order.customer}</td>
+                    <td className="px-4 py-3 text-teal-700">{order.date}</td>
+                    <td className="px-4 py-3 text-teal-700">${order.amount.toFixed(2)}</td>
+                    <td className="px-4 py-3">
+                      <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
+                        order.status === 'Processing' ? 'bg-blue-100 text-blue-800' :
+                          'bg-orange-100 text-orange-800'
+                        }`}>
+                        {order.status}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      {/* Order details button */}
+                      <button
+                        onClick={() => {
+                          alert(`Order ${order.id} Details:\n\nCustomer: ${order.customer}\nEmail: ${order.email}\nDate: ${order.date}\nStatus: ${order.status}\n\nItems:\n${order.items.map(item => `- ${item.name} x${item.quantity} ($${item.price})`).join('\n')}`);
+                        }}
+                        className="text-teal-600 hover:text-teal-800 mr-2 py-2"
+                      >
+                        View
+                      </button>
+
+                      {/* Status update dropdown */}
+                      {order.status !== 'Delivered' && (
+                        <select
+                          value={order.status}
+                          onChange={(e) => updateOrderStatus(order.id, e.target.value)}
+                          className="text-sm border border-teal-200 rounded p-1 text-black min-h-[36px]"
+                        >
+                          <option value="Pending">Pending</option>
+                          <option value="Processing">Processing</option>
+                          <option value="Delivered">Delivered</option>
+                        </select>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Orders Cards - Mobile View */}
+      <div className="md:hidden space-y-4">
+        {filteredOrders.length === 0 ? (
+          <div className="bg-white p-6 rounded-lg shadow-md text-center text-teal-600">
+            No orders found with the selected filter.
+          </div>
+        ) : (
+          filteredOrders.map((order) => (
+            <div key={order.id} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <p className="text-sm font-medium text-teal-800">{order.id}</p>
+                  <p className="text-sm text-gray-600 mt-1">{order.customer}</p>
+                  <p className="text-xs text-gray-500 mt-1">{order.date}</p>
+                </div>
+                <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
+                    order.status === 'Processing' ? 'bg-blue-100 text-blue-800' :
+                      'bg-orange-100 text-orange-800'
+                  }`}>
+                  {order.status}
+                </span>
+              </div>
+              <div className="mb-3">
+                <p className="text-lg font-bold text-teal-800">${order.amount.toFixed(2)}</p>
+                <p className="text-xs text-gray-500">{order.items.length} item(s)</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => {
+                    alert(`Order ${order.id} Details:\n\nCustomer: ${order.customer}\nEmail: ${order.email}\nDate: ${order.date}\nStatus: ${order.status}\n\nItems:\n${order.items.map(item => `- ${item.name} x${item.quantity} ($${item.price})`).join('\n')}`);
+                  }}
+                  className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 min-h-[44px] flex items-center justify-center"
+                >
+                  View Details
+                </button>
+                {order.status !== 'Delivered' && (
+                  <select
+                    value={order.status}
+                    onChange={(e) => updateOrderStatus(order.id, e.target.value)}
+                    className="w-full border border-teal-200 rounded-md p-2 text-black min-h-[44px]"
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Delivered">Delivered</option>
+                  </select>
+                )}
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
