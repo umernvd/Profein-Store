@@ -280,7 +280,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ## 👤 Author
 
 **Umer Naveed**  
-Software Engineering Student | Full-Stack Web Developer
+Software Engineer | Full-Stack Developer
 
 * 🌐 Portfolio: [umer-naveed.vercel.app](https://umer-naveed.vercel.app/)
 * 💼 LinkedIn: [linkedin.com/in/umer-naveed](https://www.linkedin.com/in/umer-naveed)
