@@ -86,10 +86,10 @@ const CartPage = () => {
           {cart.map((item) => (
             <div
               key={item.id}
-              className="flex items-center gap-4 bg-white p-4 rounded-lg shadow-sm border border-teal-100"
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-white p-4 rounded-lg shadow-sm border border-teal-100"
             >
               {/* Product image */}
-              <div className="relative w-24 h-24 flex-shrink-0">
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0">
                 <Image
                   src={item.image}
                   alt={item.name}
@@ -155,7 +155,7 @@ const CartPage = () => {
         </div>
 
         {/* Order Summary section - takes 1/3 of the width on large screens */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-100 h-fit">
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-100 h-fit lg:sticky lg:top-24">
           <h2 className="text-xl font-semibold text-teal-800 mb-4">Order Summary</h2>
 
           {/* Price breakdown */}
