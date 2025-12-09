@@ -51,19 +51,19 @@ const CartPage = () => {
             <line x1="80" y1="100" x2="120" y2="100" stroke="#fb923c" strokeWidth="3" strokeLinecap="round" />
           </svg>
           
-          <h1 className="text-3xl font-bold text-teal-800 mb-4">Your Cart is Empty</h1>
-          <p className="text-teal-600 mb-8">Looks like you haven't added any items yet. Start shopping to fill it up!</p>
+          <h1 className="text-3xl font-bold text-teal-950 mb-4">Your Cart is Empty</h1>
+          <p className="text-teal-700 mb-8">Looks like you haven't added any items yet. Start shopping to fill it up!</p>
           
           <div className="flex gap-4 justify-center">
             <Link
               href="/products"
-              className="inline-block bg-orange-400 text-teal-900 px-8 py-3 rounded-lg font-semibold hover:bg-orange-500 transition-all duration-300 shadow-md hover:shadow-lg"
+              className="inline-block bg-orange-400 text-teal-950 px-8 py-3 rounded-lg font-semibold hover:bg-orange-500 transition-all duration-300 shadow-md hover:shadow-lg"
             >
               Browse Products
             </Link>
             <Link
               href="/"
-              className="inline-block border-2 border-teal-700 text-teal-800 px-8 py-3 rounded-lg font-semibold hover:bg-teal-50 transition-all duration-300"
+              className="inline-block border-2 border-teal-900 text-teal-950 px-8 py-3 rounded-lg font-semibold hover:bg-teal-50 transition-all duration-300">
             >
               Go Home
             </Link>
@@ -76,7 +76,7 @@ const CartPage = () => {
   // If there are items in the cart, show the cart page
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-3xl font-bold text-teal-800 mb-8">Shopping Cart</h1>
+      <h1 className="text-3xl font-bold text-teal-950 mb-8">Shopping Cart</h1>
 
       {/* Grid layout with cart items on the left and order summary on the right */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -86,7 +86,7 @@ const CartPage = () => {
           {cart.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-white p-4 rounded-lg shadow-sm border border-teal-100"
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-white p-4 rounded-lg shadow-sm border border-teal-200"
             >
               {/* Product image */}
               <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0">
@@ -100,28 +100,28 @@ const CartPage = () => {
 
               {/* Product details */}
               <div className="flex-grow">
-                <h3 className="text-lg font-semibold text-teal-800">{item.name}</h3>
-                <p className="text-teal-600 text-sm">{item.category}</p>
+                <h3 className="text-lg font-semibold text-teal-950">{item.name}</h3>
+                <p className="text-teal-700 text-sm">{item.category}</p>
 
                 {/* Quantity controls and remove button */}
                 <div className="mt-2 flex items-center gap-4">
                   {/* Quantity adjustment control */}
-                  <div className="flex items-center border border-teal-200 rounded-md">
+                  <div className="flex items-center border border-teal-300 rounded-md">
                     {/* Decrease quantity button */}
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      className="px-3 py-1 text-teal-600 hover:text-teal-800 transition-colors"
+                      className="px-3 py-1 text-teal-700 hover:text-teal-950 transition-colors"
                     >
                       -
                     </button>
                     {/* Current quantity display */}
-                    <span className="px-3 py-1 text-teal-800 border-x border-teal-200">
+                    <span className="px-3 py-1 text-teal-950 border-x border-teal-300">
                       {item.quantity}
                     </span>
                     {/* Increase quantity button */}
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="px-3 py-1 text-teal-600 hover:text-teal-800 transition-colors"
+                      className="px-3 py-1 text-teal-700 hover:text-teal-950 transition-colors">
                     >
                       +
                     </button>
@@ -139,8 +139,8 @@ const CartPage = () => {
 
               {/* Price information */}
               <div className="text-right">
-                <p className="text-teal-800 font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
-                <p className="text-sm text-teal-600">${item.price.toFixed(2)} each</p>
+                <p className="text-teal-950 font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
+                <p className="text-sm text-teal-700">${item.price.toFixed(2)} each</p>
               </div>
             </div>
           ))}
@@ -155,26 +155,26 @@ const CartPage = () => {
         </div>
 
         {/* Order Summary section - takes 1/3 of the width on large screens */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-100 h-fit lg:sticky lg:top-24">
-          <h2 className="text-xl font-semibold text-teal-800 mb-4">Order Summary</h2>
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-200 h-fit lg:sticky lg:top-24">
+          <h2 className="text-xl font-semibold text-teal-950 mb-4">Order Summary</h2>
 
           {/* Price breakdown */}
           <div className="space-y-2 mb-4">
             {/* Subtotal */}
-            <div className="flex justify-between text-teal-600">
+            <div className="flex justify-between text-teal-700">
               <span>Subtotal</span>
               <span>${getCartTotal().toFixed(2)}</span>
             </div>
 
             {/* Shipping */}
-            <div className="flex justify-between text-teal-600">
+            <div className="flex justify-between text-teal-700">
               <span>Shipping</span>
               <span>Free</span>
             </div>
 
             {/* Total */}
-            <div className="border-t border-teal-100 pt-2 mt-2">
-              <div className="flex justify-between text-lg font-semibold text-teal-800">
+            <div className="border-t border-teal-200 pt-2 mt-2">
+              <div className="flex justify-between text-lg font-semibold text-teal-950">
                 <span>Total</span>
                 <span>${getCartTotal().toFixed(2)}</span>
               </div>
@@ -184,7 +184,7 @@ const CartPage = () => {
           {/* Checkout button */}
           <button
             onClick={() => router.push('/checkout')}
-            className="w-full bg-orange-400 text-teal-900 py-3 rounded-lg font-semibold hover:bg-orange-500 transition duration-300"
+            className="w-full bg-orange-400 text-teal-950 py-3 rounded-lg font-semibold hover:bg-orange-500 transition duration-300"
           >
             Proceed to Checkout
           </button>
