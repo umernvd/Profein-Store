@@ -36,7 +36,7 @@ export default function Navbar() {
 
   return (
     // Main navigation bar with glassmorphism effect
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-teal-700/95 backdrop-blur-md shadow-lg border-b border-teal-600/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-teal-950/95 backdrop-blur-md shadow-lg border-b border-teal-850/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo/Brand section */}
@@ -61,7 +61,7 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.path}
-                className="text-teal-100 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                className="text-teal-100 hover:text-white hover:bg-teal-900 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200"
               >
                 {item.name}
               </Link>
@@ -70,7 +70,7 @@ export default function Navbar() {
             {/* Admin link - always visible */}
             <Link
               href="/admin"
-              className="text-orange-400 hover:text-orange-300 px-3 py-2 rounded-md text-sm font-medium"
+              className="text-orange-400 hover:text-orange-300 hover:bg-teal-900 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200"
             >
               Admin
             </Link>
@@ -102,7 +102,7 @@ export default function Navbar() {
                   setIsMenuOpen(true);
                 }
               }}
-              className="inline-flex items-center justify-center p-2 rounded-md text-teal-100 hover:text-white hover:bg-teal-600"
+              className="inline-flex items-center justify-center p-2 rounded-md text-teal-100 hover:text-white hover:bg-teal-900 transition-all duration-200"
             >
               <span className="sr-only">Open main menu</span>
               {/* Toggle between hamburger and X icon based on menu state */}
@@ -122,14 +122,14 @@ export default function Navbar() {
 
       {/* Mobile Menu - only displayed when isMenuOpen is true */}
       {isMenuOpen && (
-        <div className={`md:hidden bg-teal-800/95 backdrop-blur-md border-t border-teal-600/50 ${isClosing ? 'animate-slideUp' : 'animate-slideDown'}`}>
+        <div className={`md:hidden bg-teal-925/95 backdrop-blur-md border-t border-teal-850/50 ${isClosing ? 'animate-slideUp' : 'animate-slideDown'}`}>
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {/* Map through menu items to create mobile menu links */}
             {menuItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.path}
-                className="block text-teal-100 hover:text-white hover:bg-teal-600 px-3 py-2 rounded-md text-base font-medium"
+                className="block text-teal-100 hover:text-white hover:bg-teal-900 px-3 py-2 rounded-md text-base font-medium transition-all duration-200"
                 onClick={handleMenuClose} // Close menu with animation when link is clicked
               >
                 {item.name}
@@ -139,7 +139,7 @@ export default function Navbar() {
             {/* Admin link - always visible */}
             <Link
               href="/admin"
-              className="block text-orange-400 hover:text-orange-300 hover:bg-teal-600 px-3 py-2 rounded-md text-base font-medium"
+              className="block text-orange-400 hover:text-orange-300 hover:bg-teal-900 px-3 py-2 rounded-md text-base font-medium transition-all duration-200"
               onClick={handleMenuClose}
             >
               Admin
@@ -148,7 +148,7 @@ export default function Navbar() {
             {/* Mobile cart button */}
             <Link
               href="/cart"
-              className="flex text-teal-800 bg-orange-400 hover:bg-orange-500 px-3 py-2 rounded-md text-base font-medium items-center justify-between"
+              className="flex text-teal-800 bg-orange-400 hover:bg-orange-500 px-3 py-2 rounded-md text-base font-medium items-center justify-between transition-all duration-200"
               onClick={handleMenuClose} // Close menu with animation when cart is clicked
             >
               <span>Cart</span>
