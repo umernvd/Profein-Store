@@ -140,7 +140,7 @@ const MorphingBlob = ({ delay = 0 }) => {
   return (
     <motion.svg
       viewBox="0 0 200 200"
-      className="absolute w-64 h-64 opacity-20"
+      className="absolute w-64 h-64 opacity-20 will-change-transform"
       animate={{
         scale: [1, 1.1, 0.9, 1],
         rotate: [0, 90, 180, 270, 360]
