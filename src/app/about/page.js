@@ -368,7 +368,7 @@ const AboutPage = () => {
           <h2 className="text-4xl font-bold text-teal-900 text-center mb-12">Our Journey</h2>
           <div className="relative">
             {/* Animated path */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-teal-500 to-orange-500" />
+            <div className="absolute left-4 md:left-1/2 md:transform md:-translate-x-1/2 h-full w-1 bg-gradient-to-b from-teal-500 to-orange-500" />
             
             {milestones.map((milestone, index) => (
               <motion.div
@@ -377,9 +377,9 @@ const AboutPage = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
-                className={`flex items-center mb-12 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+                className={`flex flex-col md:flex-row items-start md:items-center mb-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
               >
-                <div className={`w-5/12 ${index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8'}`}>
+                <div className={`w-full md:w-5/12 pl-12 md:pl-0 ${index % 2 === 0 ? 'md:text-right md:pr-8' : 'md:text-left md:pl-8'}`}>
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     className="bg-white rounded-xl p-6 shadow-lg border border-teal-100"
@@ -392,12 +392,12 @@ const AboutPage = () => {
                 
                 <motion.div
                   whileHover={{ scale: 1.5, rotate: 360 }}
-                  className="w-2/12 flex justify-center"
+                  className="absolute left-0 md:static md:w-2/12 md:flex md:justify-center"
                 >
                   <div className="w-4 h-4 bg-gradient-to-r from-teal-500 to-orange-500 rounded-full z-10" />
                 </motion.div>
                 
-                <div className="w-5/12" />
+                <div className="hidden md:block md:w-5/12" />
               </motion.div>
             ))}
           </div>
