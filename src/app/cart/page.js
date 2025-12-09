@@ -121,7 +121,7 @@ const CartPage = () => {
                     {/* Increase quantity button */}
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="px-3 py-1 text-teal-700 hover:text-teal-950 transition-colors">
+                      className="px-3 py-1 text-teal-700 hover:text-teal-950 transition-colors"
                     >
                       +
                     </button>
