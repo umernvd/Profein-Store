@@ -182,8 +182,8 @@ export default function AdminProducts() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-teal-800">Manage Products</h1>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
+        <h1 className="text-2xl sm:text-3xl font-bold text-teal-800">Manage Products</h1>
         <button
           onClick={() => {
             setEditingProduct(null);
@@ -196,7 +196,7 @@ export default function AdminProducts() {
             });
             setShowForm(!showForm);
           }}
-          className="bg-orange-400 text-teal-900 px-4 py-2 rounded-md hover:bg-orange-500"
+          className="bg-orange-400 text-teal-900 px-4 py-2 rounded-md hover:bg-orange-500 min-h-[44px]"
         >
           {showForm ? 'Cancel' : 'Add New Product'}
         </button>
@@ -204,34 +204,34 @@ export default function AdminProducts() {
 
       {/* Product Form (for Add/Edit) */}
       {showForm && (
-        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-          <h2 className="text-xl font-semibold text-teal-800 mb-4">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-8">
+          <h2 className="text-lg sm:text-xl font-semibold text-teal-800 mb-4">
             {editingProduct ? 'Edit Product' : 'Add New Product'}
           </h2>
           <form onSubmit={editingProduct ? handleEditProduct : handleAddProduct}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Product Name */}
               <div>
-                <label className="block text-teal-700 mb-2">Product Name</label>
+                <label className="block text-sm text-teal-700 mb-2">Product Name</label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-teal-200 rounded-md text-black"
+                  className="w-full min-h-[44px] px-3 py-2 border border-teal-200 rounded-md text-black"
                   required
                 />
               </div>
 
               {/* Price */}
               <div>
-                <label className="block text-teal-700 mb-2">Price ($)</label>
+                <label className="block text-sm text-teal-700 mb-2">Price ($)</label>
                 <input
                   type="number"
                   name="price"
                   value={formData.price}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-teal-200 rounded-md text-black"
+                  className="w-full min-h-[44px] px-3 py-2 border border-teal-200 rounded-md text-black"
                   step="0.01"
                   min="0"
                   required
@@ -240,12 +240,12 @@ export default function AdminProducts() {
 
               {/* Category */}
               <div>
-                <label className="block text-teal-700 mb-2">Category</label>
+                <label className="block text-sm text-teal-700 mb-2">Category</label>
                 <select
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-teal-200 rounded-md text-black"
+                  className="w-full min-h-[44px] px-3 py-2 border border-teal-200 rounded-md text-black"
                 >
                   <option value="">Select Category</option>
                   <option value="Equipment">Equipment</option>
@@ -257,26 +257,26 @@ export default function AdminProducts() {
 
               {/* Image URL */}
               <div>
-                <label className="block text-teal-700 mb-2">Image URL</label>
+                <label className="block text-sm text-teal-700 mb-2">Image URL</label>
                 <input
                   type="text"
                   name="image"
                   value={formData.image}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-teal-200 rounded-md text-black"
+                  className="w-full min-h-[44px] px-3 py-2 border border-teal-200 rounded-md text-black"
                   placeholder="/images/product-image.jpg"
                 />
               </div>
 
               {/* Description (full width) */}
               <div className="md:col-span-2">
-                <label className="block text-teal-700 mb-2">Description</label>
+                <label className="block text-sm text-teal-700 mb-2">Description</label>
                 <textarea
                   name="description"
                   value={formData.description}
                   onChange={handleInputChange}
                   rows="3"
-                  className="w-full px-3 py-2 border border-teal-200 rounded-md text-black"
+                  className="w-full min-h-[44px] px-3 py-2 border border-teal-200 rounded-md text-black"
                 ></textarea>
               </div>
             </div>
@@ -285,7 +285,7 @@ export default function AdminProducts() {
             <div className="mt-4">
               <button
                 type="submit"
-                className="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800"
+                className="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 min-h-[44px] w-full sm:w-auto"
               >
                 {editingProduct ? 'Update Product' : 'Add Product'}
               </button>
@@ -294,63 +294,109 @@ export default function AdminProducts() {
         </div>
       )}
 
-      {/* Products Table */}
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-teal-50">
-              <th className="px-4 py-2 text-left text-teal-700">ID</th>
-              <th className="px-4 py-2 text-left text-teal-700">Image</th>
-              <th className="px-4 py-2 text-left text-teal-700">Name</th>
-              <th className="px-4 py-2 text-left text-teal-700">Category</th>
-              <th className="px-4 py-2 text-left text-teal-700">Price</th>
-              <th className="px-4 py-2 text-right text-teal-700">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-teal-100">
-            {products.length === 0 ? (
-              <tr>
-                <td colSpan="6" className="px-4 py-6 text-center text-teal-600">
-                  No products found. Add your first product!
-                </td>
+      {/* Products Table - Desktop View */}
+      <div className="hidden md:block bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-teal-50">
+                <th className="px-4 py-2 text-left text-teal-700">ID</th>
+                <th className="px-4 py-2 text-left text-teal-700">Image</th>
+                <th className="px-4 py-2 text-left text-teal-700">Name</th>
+                <th className="px-4 py-2 text-left text-teal-700">Category</th>
+                <th className="px-4 py-2 text-left text-teal-700">Price</th>
+                <th className="px-4 py-2 text-right text-teal-700">Actions</th>
               </tr>
-            ) : (
-              products.map((product) => (
-                <tr key={product.id} className="hover:bg-teal-50">
-                  <td className="px-4 py-3 text-teal-800">{product.id}</td>
-                  <td className="px-4 py-3">
-                    <div className="relative h-10 w-10">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        width={40}
-                        height={40}
-                        className="object-cover rounded"
-                      />
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-teal-800 font-medium">{product.name}</td>
-                  <td className="px-4 py-3 text-teal-700">{product.category}</td>
-                  <td className="px-4 py-3 text-teal-700">${product.price.toFixed(2)}</td>
-                  <td className="px-4 py-3 text-right space-x-2">
-                    <button
-                      onClick={() => startEditing(product)}
-                      className="text-teal-600 hover:text-teal-800"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDeleteProduct(product.id)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      Delete
-                    </button>
+            </thead>
+            <tbody className="divide-y divide-teal-100">
+              {products.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="px-4 py-6 text-center text-teal-600">
+                    No products found. Add your first product!
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                products.map((product) => (
+                  <tr key={product.id} className="hover:bg-teal-50">
+                    <td className="px-4 py-3 text-teal-800">{product.id}</td>
+                    <td className="px-4 py-3">
+                      <div className="relative h-10 w-10">
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          width={40}
+                          height={40}
+                          className="object-cover rounded"
+                        />
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-teal-800 font-medium">{product.name}</td>
+                    <td className="px-4 py-3 text-teal-700">{product.category}</td>
+                    <td className="px-4 py-3 text-teal-700">${product.price.toFixed(2)}</td>
+                    <td className="px-4 py-3 text-right space-x-2">
+                      <button
+                        onClick={() => startEditing(product)}
+                        className="text-teal-600 hover:text-teal-800 py-2"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDeleteProduct(product.id)}
+                        className="text-red-500 hover:text-red-700 py-2"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Products Cards - Mobile View */}
+      <div className="md:hidden space-y-4">
+        {products.length === 0 ? (
+          <div className="bg-white p-6 rounded-lg shadow-md text-center text-teal-600">
+            No products found. Add your first product!
+          </div>
+        ) : (
+          products.map((product) => (
+            <div key={product.id} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
+              <div className="flex gap-4 mb-4">
+                <div className="relative h-20 w-20 flex-shrink-0">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    width={80}
+                    height={80}
+                    className="object-cover rounded"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg font-semibold text-teal-800 truncate">{product.name}</h3>
+                  <p className="text-sm text-teal-600">{product.category}</p>
+                  <p className="text-lg font-bold text-teal-800 mt-1">${product.price.toFixed(2)}</p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => startEditing(product)}
+                  className="flex-1 bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 min-h-[44px] flex items-center justify-center"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeleteProduct(product.id)}
+                  className="flex-1 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 min-h-[44px] flex items-center justify-center"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
