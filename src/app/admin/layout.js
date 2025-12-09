@@ -88,11 +88,11 @@ export default function AdminLayout({ children }) {
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Mobile Header Bar - visible only on mobile */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-teal-800 text-white shadow-lg">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-teal-950 text-white shadow-lg">
         <div className="flex items-center justify-between px-4 py-3">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+            className="p-2 rounded-md hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all duration-200"
             aria-label="Toggle menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -120,7 +120,7 @@ export default function AdminLayout({ children }) {
       {/* Sidebar for admin navigation */}
       <div className={`
         fixed lg:static inset-y-0 left-0 z-50
-        w-64 bg-teal-800 text-white transform transition-transform duration-300 ease-in-out
+        w-64 bg-teal-950 text-white transform transition-transform duration-300 ease-in-out
         ${
           isMobileMenuOpen 
             ? 'translate-x-0 animate-slideInLeft' 
@@ -129,7 +129,7 @@ export default function AdminLayout({ children }) {
       `}>
         <div className="flex flex-col h-full">
           {/* Sidebar header */}
-          <div className="p-4 border-b border-teal-700">
+          <div className="p-4 border-b border-teal-850">
             <h1 className="text-xl sm:text-2xl font-bold">Profein Admin</h1>
           </div>
 
@@ -141,8 +141,8 @@ export default function AdminLayout({ children }) {
                   <Link
                     href={item.path}
                     onClick={closeMobileMenu}
-                    className={`flex items-center px-4 py-3 hover:bg-teal-700 transition-colors min-h-[44px] ${
-                      pathname === item.path ? 'bg-teal-700 font-bold border-l-4 border-orange-400' : ''
+                    className={`flex items-center px-4 py-3 hover:bg-teal-900 transition-all duration-200 min-h-[44px] ${
+                      pathname === item.path ? 'bg-teal-900 font-bold border-l-4 border-orange-500' : ''
                     }`}
                   >
                     {item.name}
@@ -153,11 +153,11 @@ export default function AdminLayout({ children }) {
           </nav>
 
           {/* Back to store & logout buttons */}
-          <div className="border-t border-teal-700">
+          <div className="border-t border-teal-850">
             <Link
               href="/"
               onClick={closeMobileMenu}
-              className="flex items-center px-4 py-3 text-teal-100 hover:bg-teal-700 transition-colors min-h-[44px]"
+              className="flex items-center px-4 py-3 text-teal-100 hover:bg-teal-900 transition-all duration-200 min-h-[44px]"
             >
               ← Back to Store
             </Link>
@@ -166,7 +166,7 @@ export default function AdminLayout({ children }) {
                 closeMobileMenu();
                 handleLogout();
               }}
-              className="flex items-center w-full text-left px-4 py-3 text-orange-400 hover:bg-teal-700 transition-colors min-h-[44px]"
+              className="flex items-center w-full text-left px-4 py-3 text-orange-400 hover:bg-teal-900 transition-all duration-200 min-h-[44px]"
             >
               Logout
             </button>
