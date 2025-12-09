@@ -97,7 +97,7 @@ const HeroSlideshow = ({ products }) => {
         {slideshowProducts.map((_, index) => (
           <button
             key={index}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${currentSlide === index ? 'bg-orange-400 w-6' : 'bg-white/50'
+            className={`w-3 h-3 min-w-[12px] min-h-[12px] rounded-full transition-all duration-300 ${currentSlide === index ? 'bg-orange-400 w-8' : 'bg-white/50'
               }`}
             onClick={() => setCurrentSlide(index)}
             aria-label={`Go to slide ${index + 1}`}
@@ -176,7 +176,7 @@ export default function Home() {
           >
             <motion.h1
               variants={itemVariants}
-              className="text-5xl lg:text-6xl font-bold text-teal-900 leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl font-bold text-teal-900 leading-tight"
             >
               Transform Your
               <span className="text-orange-400"> Fitness Journey</span>
