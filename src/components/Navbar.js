@@ -34,12 +34,11 @@ export default function Navbar() {
     <Image
       src="/images/store-logo.png"
       alt="Profein Logo"
-      width={140} // Adjust based on your logo's dimensions
+      width={140}
       height={70}
       quality={90} 
-
-     className="object-contain" // Ensures proper scaling
-      priority // Important for above-the-fold logos
+     className="object-contain w-28 sm:w-32 md:w-36"
+      priority
     />
   </Link>
 </div>
