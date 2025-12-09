@@ -438,7 +438,7 @@ const AboutPage = () => {
                     <motion.div
                       animate={{ rotate: [0, 10, -10, 0] }}
                       transition={{ duration: 2, repeat: Infinity }}
-                      className="text-5xl mb-4"
+                      className="text-4xl md:text-5xl mb-4"
                     >
                       {value.icon}
                     </motion.div>
