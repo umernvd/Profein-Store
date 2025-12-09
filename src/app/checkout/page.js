@@ -78,11 +78,11 @@ const CheckoutPage = () => {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-teal-800 mb-4">Your Cart is Empty</h1>
-          <p className="text-teal-600 mb-8">Add items to your cart before proceeding to checkout.</p>
+          <h1 className="text-3xl font-bold text-teal-950 mb-4">Your Cart is Empty</h1>
+          <p className="text-teal-700 mb-8">Add items to your cart before proceeding to checkout.</p>
           <Link
             href="/products"
-            className="inline-block bg-orange-400 text-teal-900 px-8 py-3 rounded-lg font-semibold hover:bg-orange-500 transition duration-300"
+            className="inline-block bg-orange-400 text-teal-950 px-8 py-3 rounded-lg font-semibold hover:bg-orange-500 transition duration-300"
           >
             Browse Products
           </Link>
@@ -227,7 +227,7 @@ const CheckoutPage = () => {
   // Reusable input field component for form fields
   const InputField = ({ label, name, type = 'text', required = true, value, onChange, placeholder }) => (
     <div>
-      <label htmlFor={name} className="block text-sm font-medium text-teal-800 mb-1">
+      <label htmlFor={name} className="block text-sm font-medium text-teal-950 mb-1">
         {label}
       </label>
       <input
@@ -239,14 +239,14 @@ const CheckoutPage = () => {
         required={required}
         placeholder={placeholder}
         autoComplete={getAutocompleteValue(name)}
-        className="w-full px-3 py-2 border border-teal-200 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent text-black"
+        className="w-full px-3 py-2 border border-teal-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent text-black"
       />
     </div>
   );
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-3xl font-bold text-teal-800 mb-8">Checkout</h1>
+      <h1 className="text-3xl font-bold text-teal-950 mb-8">Checkout</h1>
 
       {/* Layout grid: form on the left, order summary on the right */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -254,8 +254,8 @@ const CheckoutPage = () => {
         <div className="lg:col-span-2">
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Shipping Information Section */}
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-100">
-              <h2 className="text-xl font-semibold text-teal-800 mb-4">Shipping Information</h2>
+            <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-200">
+              <h2 className="text-xl font-semibold text-teal-950 mb-4">Shipping Information</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* First Name field */}
                 <InputField
@@ -321,7 +321,7 @@ const CheckoutPage = () => {
             </div>
 
             {/* Billing Information Section */}
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-100">
+            <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-200">
               {/* Checkbox for "Same as shipping" option */}
               <div className="flex items-center mb-4">
                 <input
@@ -332,7 +332,7 @@ const CheckoutPage = () => {
                   onChange={handleInputChange}
                   className="h-4 w-4 focus:ring-orange-400 border-teal-300 rounded"
                 />
-                <label htmlFor="sameAsShipping" className="ml-2 text-sm text-teal-800">
+                <label htmlFor="sameAsShipping" className="ml-2 text-sm text-teal-950">
                   Billing address same as shipping
                 </label>
               </div>
@@ -397,8 +397,8 @@ const CheckoutPage = () => {
             </div>
 
             {/* Payment Method Selection */}
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-100">
-              <h2 className="text-xl font-semibold text-teal-800 mb-4">Payment Method</h2>
+            <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-200">
+              <h2 className="text-xl font-semibold text-teal-950 mb-4">Payment Method</h2>
               <div className="space-y-4">
                 {/* Cash on Delivery option */}
                 <div className="flex items-center space-x-4">
@@ -411,7 +411,7 @@ const CheckoutPage = () => {
                     onChange={handleInputChange}
                     className="h-4 w-4 focus:ring-orange-400 border-teal-300"
                   />
-                  <label htmlFor="cod" className="text-teal-800">
+                  <label htmlFor="cod" className="text-teal-950">
                     Cash on Delivery (COD)
                   </label>
                 </div>
@@ -426,7 +426,7 @@ const CheckoutPage = () => {
                     onChange={handleInputChange}
                     className="h-4 w-4 focus:ring-orange-400 border-teal-300"
                   />
-                  <label htmlFor="online" className="text-teal-800">
+                  <label htmlFor="online" className="text-teal-950">
                     Online Payment (Credit/Debit Card)
                   </label>
                 </div>
@@ -435,8 +435,8 @@ const CheckoutPage = () => {
 
             {/* Card Information - Only shown if Online Payment is selected */}
             {formData.paymentMethod === 'ONLINE' && (
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-100">
-                <h2 className="text-xl font-semibold text-teal-800 mb-4">Card Information</h2>
+              <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-200">
+                <h2 className="text-xl font-semibold text-teal-950 mb-4">Card Information</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Card Number field */}
                   <div className="md:col-span-2">
@@ -472,7 +472,7 @@ const CheckoutPage = () => {
             <button
               type="submit"
               disabled={isProcessing}
-              className={`w-full bg-orange-400 text-teal-900 py-3 rounded-lg font-semibold hover:bg-orange-500 transition duration-300 ${isProcessing ? 'opacity-75 cursor-not-allowed' : ''
+              className={`w-full bg-orange-400 text-teal-950 py-3 rounded-lg font-semibold hover:bg-orange-500 transition duration-300 ${isProcessing ? 'opacity-75 cursor-not-allowed' : ''
                 }`}
             >
               {isProcessing ? 'Processing...' : `Place Order (${formData.paymentMethod === 'COD' ? 'Cash on Delivery' : 'Pay Now'})`}
@@ -481,31 +481,31 @@ const CheckoutPage = () => {
         </div>
 
         {/* Order Summary Section - takes 1/3 of screen on large displays */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-100 h-fit">
-          <h2 className="text-xl font-semibold text-teal-800 mb-4">Order Summary</h2>
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-200 h-fit">
+          <h2 className="text-xl font-semibold text-teal-950 mb-4">Order Summary</h2>
           <div className="space-y-4 mb-4">
             {/* List each cart item with its price */}
             {cart.map((item) => (
               <div key={item.id} className="flex justify-between text-sm">
-                <span className="text-teal-600">
+                <span className="text-teal-700">
                   {item.name} x {item.quantity}
                 </span>
-                <span className="text-teal-800 font-medium">
+                <span className="text-teal-950 font-medium">
                   ${(item.price * item.quantity).toFixed(2)}
                 </span>
               </div>
             ))}
             {/* Subtotal, shipping, and total calculation */}
-            <div className="border-t border-teal-100 pt-4">
-              <div className="flex justify-between text-teal-600">
+            <div className="border-t border-teal-200 pt-4">
+              <div className="flex justify-between text-teal-700">
                 <span>Subtotal</span>
                 <span>${getCartTotal().toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-teal-600">
+              <div className="flex justify-between text-teal-700">
                 <span>Shipping</span>
                 <span>Free</span>
               </div>
-              <div className="flex justify-between text-lg font-semibold text-teal-800 mt-4">
+              <div className="flex justify-between text-lg font-semibold text-teal-950 mt-4">
                 <span>Total</span>
                 <span>${getCartTotal().toFixed(2)}</span>
               </div>
