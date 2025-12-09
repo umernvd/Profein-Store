@@ -63,7 +63,7 @@ const CartPage = () => {
             </Link>
             <Link
               href="/"
-              className="inline-block border-2 border-teal-900 text-teal-950 px-8 py-3 rounded-lg font-semibold hover:bg-teal-50 transition-all duration-300">
+              className="inline-block border-2 border-teal-900 text-teal-950 px-8 py-3 rounded-lg font-semibold hover:bg-teal-50 transition-all duration-300"
             >
               Go Home
             </Link>
