@@ -25,12 +25,12 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4 text-orange-400">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/products" className="text-teal-100 hover:text-orange-400">
+                <Link href="/products" className="text-teal-100 hover:text-orange-400 py-2">
                   Products
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-teal-100 hover:text-orange-400">
+                <Link href="/about" className="text-teal-100 hover:text-orange-400 py-2">
                   About Us
                 </Link>
               </li>
@@ -48,13 +48,13 @@ export default function Footer() {
               </li>
               {/* Phone Number with tel: link */}
               <li className="text-teal-100">
-                <a href="tel:+1234567890" className="hover:text-orange-400">
+                <a href="tel:+1234567890" className="hover:text-orange-400 py-2">
                   (123) 456-7890
                 </a>
               </li>
               {/* Email with mailto: link */}
               <li className="text-teal-100">
-                <a href="mailto:info@profein.com" className="hover:text-orange-400">
+                <a href="mailto:info@profein.com" className="hover:text-orange-400 py-2">
                   info@profein.com
                 </a>
               </li>
