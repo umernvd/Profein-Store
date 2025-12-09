@@ -181,13 +181,23 @@ const MorphingBlob = ({ delay = 0 }) => {
 // Magnetic card component
 const MagneticCard = ({ children }) => {
   const cardRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-100, 100], [10, -10]);
   const rotateY = useTransform(x, [-100, 100], [-10, 10]);
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
+    if (!cardRef.current || isMobile) return;
     const rect = cardRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -196,6 +206,7 @@ const MagneticCard = ({ children }) => {
   };
 
   const handleMouseLeave = () => {
+    if (isMobile) return;
     x.set(0);
     y.set(0);
   };
@@ -203,7 +214,7 @@ const MagneticCard = ({ children }) => {
   return (
     <motion.div
       ref={cardRef}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+      style={isMobile ? {} : { rotateX, rotateY, transformStyle: 'preserve-3d' }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="relative"
