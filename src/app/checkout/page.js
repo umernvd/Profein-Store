@@ -256,7 +256,7 @@ const CheckoutPage = () => {
             {/* Shipping Information Section */}
             <div className="bg-white p-6 rounded-lg shadow-sm border border-teal-100">
               <h2 className="text-xl font-semibold text-teal-800 mb-4">Shipping Information</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* First Name field */}
                 <InputField
                   label="First Name"
